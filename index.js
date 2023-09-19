@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
 const ConnectDB = require("./config/db");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 
 var corsOptions = {
@@ -30,3 +31,7 @@ app.use(cors(corsOptions)); // to accept request from origin specified in cor op
 app.get("/", (req, res) => {
     res.send("welcome !!!");
   });
+
+  app.use(notFound);
+
+app.use(errorHandler);
