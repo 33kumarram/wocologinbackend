@@ -53,8 +53,45 @@ const authUser = errorHandler(async function (req, res) {
   }
 });
 
+const getUserDetails = errorHandler(async function (req, res) {
+  const email = req.params.email;
+  try{
+  const user = await User.findOne({ email });
+    res.status(201).json({
+      _id: user._id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    });
+  } catch(err) {
+    console.log(err)
+    res.status(400);
+    throw new Error("Error occurred while fetching user details");
+  }
+});
+
+const updateUserDetails = errorHandler(async function (req, res) {
+  const data = req.body;
+  const id = req.params.id
+  try{
+  const user = await User.findByIdAndUpdate(id, data);
+    res.status(201).json({
+      _id: user._id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    });
+  } catch(err) {
+    console.log(err)
+    res.status(400);
+    throw new Error("Error occurred while updating user details");
+  }
+});
+
 
 module.exports = {
   registerUser,
   authUser,
+  getUserDetails,
+  updateUserDetails
 };
