@@ -76,7 +76,7 @@ const updateUserDetails = errorHandler(async function (req, res) {
   const data = req.body;
   const id = req.params.id
   try{
-  const user = await User.findByIdAndUpdate(id, data);
+  const user = await User.findByIdAndUpdate(id, data, {new:true});
     res.status(201).json({
       _id: user._id,
       first_name: user.first_name,
