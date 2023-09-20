@@ -39,7 +39,9 @@ const registerUser = errorHandler(async (req, res) => {
 const authUser = errorHandler(async function (req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (user && user.comparePassword(password)) {
+  let isCorrectPassword = await user.comparePassword(password)
+   
+  if (user && isCorrectPassword) {
     res.status(201).json({
       _id: user._id,
       first_name: user.first_name,

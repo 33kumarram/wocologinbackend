@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const ConnectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const userRoutes = require("./routes/userRoutes")
 
 
 var corsOptions = {
@@ -28,6 +29,7 @@ app.use(express.json()); // to accept json data
 app.use(morgan("dev")); // to display hit url in terminal
 app.use(cors(corsOptions)); // to accept request from origin specified in cor options
 
+app.use("/users", userRoutes)
 app.get("/", (req, res) => {
     res.send("welcome !!!");
   });
